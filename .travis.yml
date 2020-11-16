@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t rcsillag/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true rcsillag/react-test npm test
+
+after_success:
+  - docker build -t rcsillag/fibonacci-calc-client ./client
+  - docker build -t rcsillag/fibonacci-calc-nginx ./nginx
+  - docker build -t rcsillag/fibonacci-calc-server ./server
+  - docker build -t rcsillag/fibonacci-calc-worker ./worker
