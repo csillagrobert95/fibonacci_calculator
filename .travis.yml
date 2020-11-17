@@ -13,3 +13,10 @@ after_success:
   - docker build -t rcsillag/fibonacci-calc-nginx ./nginx
   - docker build -t rcsillag/fibonacci-calc-server ./server
   - docker build -t rcsillag/fibonacci-calc-worker ./worker
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to dockerhub
+  - docker push rcsillag/fibonacci-calc-client
+  - docker push rcsillag/fibonacci-calc-nginx
+  - docker push rcsillag/fibonacci-calc-server
+  - docker push rcsillag/fibonacci-calc-worker
